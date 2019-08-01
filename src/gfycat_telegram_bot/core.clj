@@ -4,11 +4,13 @@
             [environ.core :refer [env]]
             [morse.handlers :as h]
             [morse.polling :as p]
-            [morse.api :as t])
+            [morse.api :as t]
+)
   (:gen-class))
 
 ; TODO: fill correct token
 (def token (env :telegram-token))
+
 
 
 (h/defhandler handler
@@ -36,4 +38,4 @@
     (System/exit 1))
 
   (println "Starting the gfycat_telegram_bot")
-  (<!! (p/start token handler)))
+  (<!! (p/start token handler {:timeout 10})))

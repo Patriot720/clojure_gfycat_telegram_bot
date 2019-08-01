@@ -5,13 +5,16 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
-  :dependencies [[org.clojure/clojure "1.8.0"]
+  :dependencies [
+[gfycat-api "0.1.2"]
+[org.clojure/clojure "1.8.0"]
                  [environ             "1.1.0"]
-                 [morse               "0.2.4"]]
+                 [morse               "0.5.0-SNAPSHOT"]]
 
   :plugins [[lein-environ "1.1.0"]]
 
   :main ^:skip-aot gfycat-telegram-bot.core
   :target-path "target/%s"
+  ; :jvm-opts ["-Dhttp.proxyHost=41.190.95.20" "-Dhttp.proxyPort=56167"]
 
   :profiles {:uberjar {:aot :all}})
