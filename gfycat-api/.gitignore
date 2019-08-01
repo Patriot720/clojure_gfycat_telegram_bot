@@ -10,3 +10,4 @@ pom.xml.asc
 /.nrepl-port
 .hgignore
 .hg/
+.client_info.json
