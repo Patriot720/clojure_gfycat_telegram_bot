@@ -6,8 +6,8 @@
             [morse.polling :as p]
             [morse.api :as t]
             [gfycat-api.core :as gif-api]
-            [clojure.set :refer [rename-keys]]
-            [gfycat-api.util :refer [get-gfycats-with]])
+            [gfycat-telegram-bot.util :refer [to-telegram-gif-array]]
+)
   (:gen-class))
 
 ; TODO: fill correct token
@@ -16,9 +16,7 @@
 ; Gfycat API
 (def client-id (env :client-id))
 (def client-secret (env :client-secret))
-(defn to-telegram-array [array]
-  (map #(into {:type 'gif :gif_width 100 :gif_height 100} (rename-keys %1 {:gfyId :id :miniPosterUrl :thumb_url
-                                                   :max1mbGif :gif_url}))   array ))
+
 (h/defhandler handler
 
               (h/command-fn "start"
@@ -34,15 +32,14 @@
               (h/inline-fn (fn [{id :id query :query :as inline}]
                              (if (not-blank? query)
                                (let [gfycat-token (gif-api/get-token client-id client-secret)
-                                     search-result (get-gfycats-with [:gfyId :miniPosterUrl :max1mbGif]
-                                                                     (gif-api/search gfycat-token query))]
+                                     gfycats
+                                     (:gfycats (gif-api/search gfycat-token query 50))]
 
                                  (println inline)
                                  (println id)
-                                 (println (to-telegram-array search-result))
-                                 (if (seq search-result)
-                                   (t/answer-inline token id {} (to-telegram-array search-result)
-                                                                      ))))))
+                                 (println (to-telegram-gif-array gfycats))
+                                 (if (seq gfycats)
+                                   (t/answer-inline token id {} (to-telegram-gif-array gfycats)))))))
   ; (h/message-fn
   ;   (fn [{{id :id} :chat :as message}]
   ;     (println "Intercepted message: " message)

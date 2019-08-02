@@ -1,23 +1,15 @@
 (ns gfycat-telegram-bot.core-test
   (:require [clojure.test :refer [deftest testing is]]
-            [gfycat-telegram-bot.core :as core]))
+            [gfycat-telegram-bot.util :as util]
+            [gfycat-telegram-bot.fixtures :as fixtures]))
 
-(deftest to-telegram-array-test
-  (is (= (core/to-telegram-array [{:title "Title"
-                                   :gfyId 21
-                                   :max1mbGif "fafa.gif"
-                                   :gif100px "fsdjflkjfd.gif"}
-                                  {:title "Title"
-                                   :max1mbGif "fafa.gif"
-                                   :gfyId 21
-                                   :gif100px "fsdjflkjfd.gif"}])
-         [{:type "gif"
-           :title "Title"
-           :id 21
-           :thumb_url "fsdjflkjfd.gif"
-           :gif_url "fafa.gif"}
-          {:type "gif"
-           :title "Title"
-           :id 21
-           :gif_url "fafa.gif"
-           :thumb_url "fsdjflkjfd.gif"}])))
+(deftest to-telegram-gif-array-test
+  (is (= (util/to-telegram-gif-array (:gfycats fixtures/single-gfycat-search-result))
+         '({:gif_url "https://thumbs.gfycat.com/FondFocusedClownanemonefish-max-1mb.gif"
+          :gif_width 280
+        :type "gif"
+          :thumb_url "https://thumbs.gfycat.com/FondFocusedClownanemonefish-max-1mb.gif"
+          :gif_height 158
+          :id "fondfocusedclownanemonefish"
+          :title "Canadian Flag waving animated using MIR plug in after effects - free motion graphics"
+}))))
