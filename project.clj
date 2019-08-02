@@ -6,10 +6,10 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   :dependencies [
-[gfycat-api "0.1.2"]
+[gfycat-api "0.1.3-SNAPSHOT"]
 [org.clojure/clojure "1.8.0"]
                  [environ             "1.1.0"]
-                 [morse               "0.5.0-SNAPSHOT"]]
+                 [morse               "0.2.8"]]
 
   :plugins [[lein-environ "1.1.0"]]
 
