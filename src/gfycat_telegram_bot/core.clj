@@ -1,0 +1,56 @@
+(ns gfycat-telegram-bot.core
+  (:require [clojure.core.async :refer [<!!]]
+            [clojure.string :as str]
+            [environ.core :refer [env]]
+            [morse.handlers :as h]
+            [morse.polling :as p]
+            [morse.api :as t]
+            [gfycat-api.core :as gif-api]
+            [gfycat-telegram-bot.util :refer [to-telegram-gif-array]]
+)
+  (:gen-class))
+
+; TODO: fill correct token
+(def token (env :telegram-token))
+(def not-blank? (complement str/blank?))
+; Gfycat API
+(def client-id (env :client-id))
+(def client-secret (env :client-secret))
+
+(h/defhandler handler
+
+              (h/command-fn "start"
+                            (fn [{{id :id :as chat} :chat}]
+                              (println "Bot joined new chat: " chat)
+                              (t/send-text token id "Welcome to gfycat_telegram_bot!")))
+
+              (h/command-fn "help"
+                            (fn [{{id :id :as chat} :chat}]
+                              (println "Help was requested in " chat)
+                              (t/send-text token id "Help is on the way")))
+
+              (h/inline-fn (fn [{id :id query :query :as inline}]
+                             (if (not-blank? query)
+                               (let [gfycat-token (gif-api/get-token client-id client-secret)
+                                     gfycats
+                                     (:gfycats (gif-api/search gfycat-token query 50))]
+
+                                 (println inline)
+                                 (println id)
+                                 (println (to-telegram-gif-array gfycats))
+                                 (if (seq gfycats)
+                                   (t/answer-inline token id {} (to-telegram-gif-array gfycats)))))))
+  ; (h/message-fn
+  ;   (fn [{{id :id} :chat :as message}]
+  ;     (println "Intercepted message: " message)
+  ;     (t/send-text token id "I don't do a whole lot ... yet.")))
+)
+
+(defn -main
+  [& args]
+  (when (some str/blank? [token client-id client-secret])
+    (println "Please provide tokens in TELEGRAM_TOKEN, gfycats CLIENT_ID AND CLIENT_SECRET environment variables!")
+    (System/exit 1))
+
+  (println "Starting the gfycat_telegram_bot")
+  (<!! (p/start token handler)))
