@@ -49,7 +49,7 @@
 (defn -main
   [& args]
   (when (some str/blank? [token client-id client-secret])
-    (println "Please provde token in TELEGRAM_TOKEN environment variable!")
+    (println "Please provide tokens in TELEGRAM_TOKEN, gfycats CLIENT_ID AND CLIENT_SECRET environment variables!")
     (System/exit 1))
 
   (println "Starting the gfycat_telegram_bot")
