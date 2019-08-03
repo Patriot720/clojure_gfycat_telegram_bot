@@ -39,11 +39,11 @@
 
               (h/inline-fn respond-with-gifs)
 
-  ; (h/message-fn
-  ;   (fn [{{id :id} :chat :as message}]
-  ;     (println "Intercepted message: " message)
-  ;     (t/send-text token id "I don't do a whole lot ... yet.")))
-)
+              (h/message-fn
+               (fn [{{id :id} :chat :as message}]
+                 (if message
+                   (do (println "Intercepted message: " message)
+                       (t/send-text token id "I don't do a whole lot ... yet."))))))
 
 (defn -main
   [& args]
