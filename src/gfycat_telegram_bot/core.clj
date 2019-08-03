@@ -6,16 +6,24 @@
             [morse.polling :as p]
             [morse.api :as t]
             [gfycat-api.core :as gif-api]
-            [gfycat-telegram-bot.util :refer [to-telegram-gif-array]]
-)
+            [gfycat-telegram-bot.util :refer [to-telegram-gif-array]])
   (:gen-class))
 
 ; TODO: fill correct token
 (def token (env :telegram-token))
 (def not-blank? (complement str/blank?))
-; Gfycat API
-(def client-id (env :client-id))
-(def client-secret (env :client-secret))
+
+; Gfycat API token
+; (def client-id (env :client-id))
+; (def client-secret (env :client-secret))
+; (def gfycat-token (gif-api/get-token client-id client-secret))
+
+(defn respond-with-gifs [{id :id query :query :as inline}]
+  (if (not-blank? query)
+    (if-let [{gfycats :gfycats
+              cursor :cursor}
+             (gif-api/search query 50)]
+      (t/answer-inline token id {} (to-telegram-gif-array gfycats)))))
 
 (h/defhandler handler
 
@@ -29,17 +37,8 @@
                               (println "Help was requested in " chat)
                               (t/send-text token id "Help is on the way")))
 
-              (h/inline-fn (fn [{id :id query :query :as inline}]
-                             (if (not-blank? query)
-                               (let [gfycat-token (gif-api/get-token client-id client-secret)
-                                     gfycats
-                                     (:gfycats (gif-api/search gfycat-token query 50))]
+              (h/inline-fn respond-with-gifs)
 
-                                 (println inline)
-                                 (println id)
-                                 (println (to-telegram-gif-array gfycats))
-                                 (if (seq gfycats)
-                                   (t/answer-inline token id {} (to-telegram-gif-array gfycats)))))))
   ; (h/message-fn
   ;   (fn [{{id :id} :chat :as message}]
   ;     (println "Intercepted message: " message)
@@ -48,7 +47,7 @@
 
 (defn -main
   [& args]
-  (when (some str/blank? [token client-id client-secret])
+  (when (str/blank? token)
     (println "Please provide tokens in TELEGRAM_TOKEN, gfycats CLIENT_ID AND CLIENT_SECRET environment variables!")
     (System/exit 1))
 
