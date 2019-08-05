@@ -17,7 +17,7 @@
 ; (def client-id (env :client-id))
 ; (def client-secret (env :client-secret))
 ; (def gfycat-token (gif-api/get-token client-id client-secret))
-;nnn
+;nnnnn
 ;nnn
 
 ; TODO max2mbGif
