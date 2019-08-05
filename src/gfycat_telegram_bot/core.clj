@@ -18,6 +18,7 @@
 ; (def client-secret (env :client-secret))
 ; (def gfycat-token (gif-api/get-token client-id client-secret))
 
+; TODO max2mbGif
 (defn respond-with-gifs [{id :id query :query :as inline}]
   (if (not-blank? query)
     (if-let [{gfycats :gfycats
