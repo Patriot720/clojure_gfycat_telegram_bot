@@ -18,12 +18,14 @@
 ; (def client-secret (env :client-secret))
 ; (def gfycat-token (gif-api/get-token client-id client-secret))
 
-(defn respond-with-gifs [{id :id query :query :as inline}]
+
+(defn respond-with-gifs [{id :id query :query cursor :offset :as inline}]
   (if (not-blank? query)
     (if-let [{gfycats :gfycats
-              cursor :cursor}
-             (gif-api/search query 50)]
-      (t/answer-inline token id {} (to-telegram-gif-array gfycats)))))
+              next_cursor :cursor}
+             (gif-api/search query 50 cursor)]
+      (t/answer-inline token id {
+        :next_offset next_cursor} (to-telegram-gif-array gfycats)))))
 
 (h/defhandler handler
 
