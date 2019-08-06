@@ -5,7 +5,7 @@
 
 (deftest to-telegram-gif-array-test
   (is (= (util/to-telegram-gif-array (:gfycats fixtures/single-gfycat-search-result))
-         '({:gif_url "https://thumbs.gfycat.com/FondFocusedClownanemonefish-max-1mb.gif"
+         '({:gif_url "https://thumbs.gfycat.com/FondFocusedClownanemonefish-small.gif"
           :gif_width 280
         :type "gif"
           :thumb_url "https://thumbs.gfycat.com/FondFocusedClownanemonefish-max-1mb.gif"
