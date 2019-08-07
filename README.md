@@ -1,32 +1,19 @@
 # gfycat_telegram_bot
 
-FIXME: description
+Telegram bot for inline gif queries
 
 ## Installation
 
-Download from http://example.com/FIXME.
+Download from this repo's releases.
+Setup TELEGRAM_TOKEN environmental variable
 
 ## Usage
 
-FIXME: explanation
 
-    $ java -jar gfycat_telegram_bot-0.1.0-standalone.jar [args]
-
-## Options
-
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
+    $ java -jar gfycat_telegram_bot-0.1.0-standalone.jar
 
 ### Bugs
-
 ...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
 
 ## License
 
