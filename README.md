@@ -4,8 +4,8 @@ Telegram bot for inline gif queries
 
 ## Installation
 
-Download from this repo's releases.
-Setup TELEGRAM_TOKEN environmental variable
+1. Download from this repo's releases.
+2. Setup TELEGRAM_TOKEN environmental variable
 
 ## Usage
 
