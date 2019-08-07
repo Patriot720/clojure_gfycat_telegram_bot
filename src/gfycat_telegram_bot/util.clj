@@ -1,5 +1,5 @@
 (ns gfycat-telegram-bot.util
-  (:require [clojure.set :refer [rename-keys]]))
+  )
 
 (defn to-telegram-gif-array [array];
   (map (fn [{id :gfyId

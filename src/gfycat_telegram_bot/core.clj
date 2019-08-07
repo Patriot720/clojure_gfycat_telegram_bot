@@ -32,12 +32,12 @@
               (h/command-fn "start"
                             (fn [{{id :id :as chat} :chat}]
                               (println "Bot joined new chat: " chat)
-                              (t/send-text token id "Welcome to gfycat_telegram_bot!")))
+                              (t/send-text token id {:parse_mode "markup"} (slurp "CHAT_HELP.md"))))
 
               (h/command-fn "help"
                             (fn [{{id :id :as chat} :chat}]
                               (println "Help was requested in " chat)
-                              (t/send-text token id "Help is on the way")))
+                              (t/send-text token id {:parse_mode "markup"} (slurp "CHAT_HELP.md"))))
 
               (h/inline-fn respond-with-gifs)
 
