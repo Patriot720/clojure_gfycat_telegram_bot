@@ -1,12 +1,12 @@
 (ns gfycat-telegram-bot.util
-  (:require [clojure.set :refer [rename-keys]]))
+  )
 
 (defn to-telegram-gif-array [array];
   (map (fn [{id :gfyId
               thumb_url :gif100px
-              gif_url :max1mbGif
+              gif_url :max2mbGif
               title :title
-              {{gif_width :width gif_height :height} :max1mbGif} :content-urls}]
+              {{gif_width :width gif_height :height} :max2mbGif} :content-urls}]
          {:id id
 :type "gif"
           :thumb_url thumb_url

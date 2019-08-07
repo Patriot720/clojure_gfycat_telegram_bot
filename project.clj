@@ -1,4 +1,4 @@
-(defproject gfycat_telegram_bot "0.1.0"
+(defproject gfycat_telegram_bot "0.1.1"
             :description "Telegram inline bot for  gfycat gifs"
             :url "https://github.com/Patriot720/clojure_gfycat_telegram_bot"
 
