@@ -5,7 +5,7 @@
             :license {:name "Eclipse Public License"
                       :url "http://www.eclipse.org/legal/epl-v10.html"}
 
-            :dependencies [[gfycat-api "0.1.3-SNAPSHOT"]
+            :dependencies [[gfycat-api "0.1.3"]
                            [org.clojure/clojure "1.8.0"]
                            [environ             "1.1.0"]
                            [morse               "0.2.8"]]
